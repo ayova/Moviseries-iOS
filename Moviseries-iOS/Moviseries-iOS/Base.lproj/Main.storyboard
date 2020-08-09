@@ -10,7 +10,7 @@
         <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Moviseries_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -66,8 +66,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="45x-DE-gQh" kind="relationship" relationship="viewControllers" id="j3b-8P-vgO"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="QLE-Pj-zZd"/>
+                        <segue destination="45x-DE-gQh" kind="relationship" relationship="viewControllers" id="EOf-6c-x73"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wbP-mg-VxA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

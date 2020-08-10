@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 enum RootPath: String {
     case baseURL = "https://api.themoviedb.org/3/"
     case imagesURL = "https://image.tmdb.org/t/p/w500/"
@@ -51,12 +52,18 @@ class NetworkController {
             var urlComponents = URLComponents(string: RootPath.baseURL.rawValue + contentType.rawValue)
             urlComponents?.queryItems = [ URLQueryItem(name: "api_key", value: api_key) ]
             let requestUrl = (urlComponents?.url!)!
-            let contentFetchingTask = TaskFactory.task(url: requestUrl, completion: completion)
-            contentFetchingTask.resume()
+            let contentFetchTask = TaskFactory.task(url: requestUrl, completion: completion)
+            contentFetchTask.resume()
             return
         default:
             print("Calling wrong function: \(contentType)")
             return
         }
+    }
+    
+    func fetchPoster(url: String, completion: @escaping(Data)->()) {
+        let posterUrl = URL(string: RootPath.imagesURL.rawValue + url)
+        let posterFetchTask = TaskFactory.task(url: posterUrl!, completion: completion)
+        posterFetchTask.resume()
     }
 }

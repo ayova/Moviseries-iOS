@@ -9,22 +9,125 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    
+    // MARK: Local variables
+    let networkController = NetworkController()
+    var tvShowsGathered: TvShows? {
+        didSet {
+            homeTableView.reloadData()
+        }
+    }
+    var moviesGathered: Movies? {
+        didSet {
+            homeTableView.reloadData()
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: IBOutlets
+    @IBOutlet weak var homeTableView: UITableView!
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        homeTableView.dataSource = self
+        fetchContent(from: .discoverMovieEndpoint)
+        fetchContent(from: .discoverTvEndpoint)
     }
-    */
-
+    
+    // MARK: Fetch content
+    private func fetchContent(from endpoint: TMDBEndpoints) {
+        switch endpoint {
+        case .discoverMovieEndpoint:
+            networkController.fetchContent(from: endpoint) { data in
+                guard !data.isEmpty else { print("No data received (empty)"); return }
+                do {
+                    let decodedContent = try JSONDecoder().decode(DiscoverMoviesWrapper.self, from: data)
+                    self.moviesGathered = decodedContent.results
+                }
+                catch {
+                    print(error)
+                }
+            }
+        case .discoverTvEndpoint:
+            networkController.fetchContent(from: endpoint) { data in
+                guard !data.isEmpty else { print("No data received (empty)"); return }
+                do {
+                    let decodedContent = try JSONDecoder().decode(DiscoverTvWrapper.self, from: data)
+                    self.tvShowsGathered = decodedContent.results
+                }
+                catch {
+                    print(error)
+                }
+            }
+        default:
+            print("Error - Wrong endpoint passed in! (other than discover movies or tv!)")
+        }
+    }
+    
+    private func loadImage(url: String) {
+        networkController.fetchPoster(url: url) { imageData in
+            if let image = UIImage(data: imageData) {
+                return image
+            }
+        }
+    }
 }
+
+// MARK: TableView DataSource
+
+/* movies  = section 1 */
+/* tvShows = section 2 */
+
+extension HomeViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        var sections = 0
+        if moviesGathered  != nil { sections += 1 }
+        if tvShowsGathered != nil { sections += 1 }
+        return sections
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Movies"
+        case 1:
+            return "Tv shows"
+        default:
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0: // movies section
+            return moviesGathered?.count ?? 0
+        case 1: // tv shows section
+            return tvShowsGathered?.count ?? 0
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell  = tableView.dequeueReusableCell(withIdentifier: "HomeTableCell", for: indexPath)
+        switch indexPath.section {
+        case 0: // movies section
+            if let configurableCell = cell as? HomeTableViewCell {
+                if let movieTitle = moviesGathered?[indexPath.row].title {
+                    configurableCell.titleLabel.text = movieTitle
+                }
+            }
+        case 1: // tv shows section
+            if let configurableCell = cell as? HomeTableViewCell {
+                if let tvShowName = tvShowsGathered?[indexPath.row].name {
+                    configurableCell.titleLabel.text = tvShowName
+                }
+            }
+        default:
+            fatalError()
+        }
+        return cell
+    }
+}
+
+

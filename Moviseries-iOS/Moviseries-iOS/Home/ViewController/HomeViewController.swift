@@ -32,6 +32,8 @@ class HomeViewController: UIViewController {
         homeTableView.dataSource = self
         fetchContent(from: .discoverMovieEndpoint)
         fetchContent(from: .discoverTvEndpoint)
+        
+        
     }
     
     // MARK: Fetch content
@@ -64,13 +66,15 @@ class HomeViewController: UIViewController {
         }
     }
     
-    private func loadImage(url: String) {
-        networkController.fetchPoster(url: url) { imageData in
-            if let image = UIImage(data: imageData) {
-                return image
-            }
-        }
-    }
+//    private func loadImage(url: String) -> UIImage? {
+//        var poster: UIImage? = nil
+//        networkController.fetchPoster(url: url) { imageData in
+//            if let image = UIImage(data: imageData) {
+//                poster = image
+//            }
+//        }
+//        return poster
+//    }
 }
 
 // MARK: TableView DataSource
@@ -113,14 +117,18 @@ extension HomeViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0: // movies section
             if let configurableCell = cell as? HomeTableViewCell {
-                if let movieTitle = moviesGathered?[indexPath.row].title {
-                    configurableCell.titleLabel.text = movieTitle
+                if let movie = moviesGathered?[indexPath.row] {
+                    if let poster = networkController.fetchPoster(url: movie.poster_path, tableView: homeTableView) {
+                        configurableCell.configure(title: movie.title, poster: poster)
+                    }
                 }
             }
         case 1: // tv shows section
             if let configurableCell = cell as? HomeTableViewCell {
-                if let tvShowName = tvShowsGathered?[indexPath.row].name {
-                    configurableCell.titleLabel.text = tvShowName
+                if let tvShow = tvShowsGathered?[indexPath.row] {
+                    if let poster = networkController.fetchPoster(url: tvShow.poster_path, tableView: homeTableView) {
+                        configurableCell.configure(title: tvShow.name, poster: poster)
+                    }
                 }
             }
         default:

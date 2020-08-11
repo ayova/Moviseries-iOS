@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import UIKit
 
 
 enum RootPath: String {
     case baseURL = "https://api.themoviedb.org/3/"
-    case imagesURL = "https://image.tmdb.org/t/p/w500/"
+    case imagesURL = "https://image.tmdb.org/t/p/w500"
 }
 
 enum TMDBEndpoints: String {
@@ -61,9 +62,16 @@ class NetworkController {
         }
     }
     
-    func fetchPoster(url: String, completion: @escaping(Data)->()) {
+    func fetchPoster(url: String, tableView: UITableView) -> UIImage? {
         let posterUrl = URL(string: RootPath.imagesURL.rawValue + url)
-        let posterFetchTask = TaskFactory.task(url: posterUrl!, completion: completion)
+        var poster = UIImage()
+        let posterFetchTask = TaskFactory.task(url: posterUrl!){ imageData in
+            if let image = UIImage(data: imageData) {
+                poster = image
+                tableView.reloadData()
+            }
+        }
         posterFetchTask.resume()
+        return poster
     }
 }

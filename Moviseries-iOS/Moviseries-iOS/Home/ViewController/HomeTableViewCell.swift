@@ -24,7 +24,7 @@ class HomeTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(title: String, poster: UIImage) {
+    func configure(title: String, poster: UIImage) {
         titleLabel.text = title
         posterImage.image = poster
     }

@@ -118,17 +118,15 @@ extension HomeViewController: UITableViewDataSource {
         case 0: // movies section
             if let configurableCell = cell as? HomeTableViewCell {
                 if let movie = moviesGathered?[indexPath.row] {
-                    if let poster = networkController.fetchPoster(url: movie.poster_path, tableView: homeTableView) {
-                        configurableCell.configure(title: movie.title, poster: poster)
-                    }
+                    // configure cell with the appropriate movie
+                    configurableCell.configure(title: movie.title, posterUrl: movie.poster_path)
                 }
             }
         case 1: // tv shows section
             if let configurableCell = cell as? HomeTableViewCell {
                 if let tvShow = tvShowsGathered?[indexPath.row] {
-                    if let poster = networkController.fetchPoster(url: tvShow.poster_path, tableView: homeTableView) {
-                        configurableCell.configure(title: tvShow.name, poster: poster)
-                    }
+                    // configure cell using the appropriate tv show
+                    configurableCell.configure(title: tvShow.name, posterUrl: tvShow.poster_path)
                 }
             }
         default:

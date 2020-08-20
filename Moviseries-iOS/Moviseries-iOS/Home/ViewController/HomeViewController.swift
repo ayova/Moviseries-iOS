@@ -68,19 +68,19 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: Fetch posters
-    private func fetchPoster(posterUrl: String) -> UIImage {
-        var image = UIImage()
-        
+    private func fetchPoster(posterUrl: String) -> UIImage? {
         if let poster = posterCacheController.retrievePoster(withId: posterUrl) {
             return poster
-        }
-        networkController.fetchPoster(url: posterUrl) { posterData in
-            if let poster = UIImage(data: posterData) {
-                image = poster
-                self.posterCacheController.savePoster(poster, withId: posterUrl)
+        } else {
+            var image = UIImage()
+            networkController.fetchPoster(url: posterUrl) { posterData in
+                if let poster = UIImage(data: posterData) {
+                    image = poster
+                    self.posterCacheController.savePoster(poster, withId: posterUrl)
+                }
             }
+            return image
         }
-        return image
     }
 }
 
@@ -134,7 +134,9 @@ extension HomeViewController: UITableViewDataSource {
                         configurableCell.setTitle(title: movie.title)
                         configurableCell.setImage(poster: poster)
                     }*/
-                    configurableCell.configure(title: movie.title, poster: fetchPoster(posterUrl: movie.poster_path))
+                    if let poster = fetchPoster(posterUrl: movie.poster_path) {
+                        configurableCell.configure(title: movie.title, poster: poster)
+                    }
                 }
             }
         case 1: // tv shows section
@@ -148,7 +150,9 @@ extension HomeViewController: UITableViewDataSource {
                         posterCacheController.savePoster(poster, withId: tvShow.poster_path)
                         configurableCell.configure(title: tvShow.name, poster: poster)
                     }*/
-                    configurableCell.configure(title: tvShow.name, poster: fetchPoster(posterUrl: tvShow.poster_path))
+                    if let poster = fetchPoster(posterUrl: tvShow.poster_path) {
+                        configurableCell.configure(title: tvShow.name, poster: poster)
+                    }
                 }
             }
         default:

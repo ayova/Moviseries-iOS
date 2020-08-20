@@ -72,6 +72,7 @@ class HomeViewController: UIViewController {
         if let poster = posterCacheController.retrievePoster(withId: posterUrl) {
             return poster
         } else {
+            // FIXME: Image is being downloaded and cached, but it's not being updated properly on first load :(
             var image = UIImage()
             networkController.fetchPoster(url: posterUrl) { posterData in
                 if let poster = UIImage(data: posterData) {

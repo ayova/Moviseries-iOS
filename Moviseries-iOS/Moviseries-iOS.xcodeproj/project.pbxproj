@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		841E0AD424EED4FB0000C0CB /* PosterCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E0AD324EED4FB0000C0CB /* PosterCache.swift */; };
 		8457B3DA24E01D8E0095EEF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457B3D924E01D8E0095EEF3 /* AppDelegate.swift */; };
 		8457B3DC24E01D8E0095EEF3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457B3DB24E01D8E0095EEF3 /* SceneDelegate.swift */; };
 		8457B3E124E01D8E0095EEF3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8457B3DF24E01D8E0095EEF3 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		841E0AD324EED4FB0000C0CB /* PosterCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCache.swift; sourceTree = "<group>"; };
 		8457B3D624E01D8E0095EEF3 /* Moviseries-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Moviseries-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8457B3D924E01D8E0095EEF3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8457B3DB24E01D8E0095EEF3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +53,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		841E0AD224EED3030000C0CB /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				841E0AD324EED4FB0000C0CB /* PosterCache.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 		8457B3CD24E01D8E0095EEF3 = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +80,7 @@
 		8457B3D824E01D8E0095EEF3 /* Moviseries-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				841E0AD224EED3030000C0CB /* Persistence */,
 				8457B3F924E063B50095EEF3 /* Network */,
 				8457B3F324E05BA10095EEF3 /* Home */,
 				8457B3F024E058320095EEF3 /* Models */,
@@ -207,6 +218,7 @@
 				8457B3DC24E01D8E0095EEF3 /* SceneDelegate.swift in Sources */,
 				8457B40724E15E540095EEF3 /* HomeTableViewCell.swift in Sources */,
 				8457B3FD24E064520095EEF3 /* NetworkController.swift in Sources */,
+				841E0AD424EED4FB0000C0CB /* PosterCache.swift in Sources */,
 				8457B3FC24E064520095EEF3 /* TaskFactory.swift in Sources */,
 				8457B3F624E05E150095EEF3 /* HomeViewController.swift in Sources */,
 			);

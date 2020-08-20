@@ -27,11 +27,6 @@ class HomeTableViewCell: UITableViewCell {
     func configure(title: String, poster: UIImage) {
         titleLabel.text = title
         posterImage.image = poster
-//        let url = RootPath.imagesURL.rawValue + posterUrl
-//        guard let imageData = try? Data(contentsOf: URL(string: url)!) else { return }
-//        if let returnedImage = UIImage(data: imageData) {
-//            posterImage.image = returnedImage
-//        }
     }
     
     func setTitle(title: String) {

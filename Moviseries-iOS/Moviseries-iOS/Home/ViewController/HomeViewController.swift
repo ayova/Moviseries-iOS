@@ -12,6 +12,7 @@ class HomeViewController: UIViewController {
     
     // MARK: Local variables
     let networkController = NetworkController()
+    let posterCacheController = PosterCache()
     var tvShowsGathered: TvShows? {
         didSet {
             homeTableView.reloadData()
@@ -67,12 +68,14 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: Fetch posters
-    private func fetchPoster(posterUrl: String, cell: HomeTableViewCell) {
+    private func fetchPoster(posterUrl: String) -> UIImage {
+        var image = UIImage()
         networkController.fetchPoster(url: posterUrl) { posterData in
             if let poster = UIImage(data: posterData) {
-                cell.setImage(poster: poster)
+                image = poster
             }
         }
+        return image
     }
 }
 
@@ -117,19 +120,28 @@ extension HomeViewController: UITableViewDataSource {
         case 0: // movies section
             if let configurableCell = cell as? HomeTableViewCell {
                 if let movie = moviesGathered?[indexPath.row] {
-                    // configure cell with the appropriate movie
-//                    configurableCell.configure(title: movie.title, poster:)
-                    configurableCell.setTitle(title: movie.title)
-                    fetchPoster(posterUrl: movie.poster_path, cell: configurableCell)
+                    // configure cell with the appropriate movie details
+                    if let posterInCache = posterCacheController.retrievePoster(withId: movie.poster_path) {
+                        configurableCell.configure(title: movie.title, poster: posterInCache)
+                    } else {
+                        let poster = fetchPoster(posterUrl: movie.poster_path)
+                        posterCacheController.savePoster(poster, withId: movie.poster_path)
+                        configurableCell.setTitle(title: movie.title)
+                        configurableCell.setImage(poster: poster)
+                    }
                 }
             }
         case 1: // tv shows section
             if let configurableCell = cell as? HomeTableViewCell {
                 if let tvShow = tvShowsGathered?[indexPath.row] {
-                    // configure cell using the appropriate tv show
-//                    configurableCell.configure(title: tvShow.name, posterUrl: tvShow.poster_path)
-                    configurableCell.setTitle(title: tvShow.name)
-                    fetchPoster(posterUrl: tvShow.poster_path, cell: configurableCell)
+                    // configure cell using the appropriate tv show details
+                    if let posterInCache = posterCacheController.retrievePoster(withId: tvShow.poster_path) {
+                        configurableCell.configure(title: tvShow.name, poster: posterInCache)
+                    } else {
+                        let poster = fetchPoster(posterUrl: tvShow.poster_path)
+                        posterCacheController.savePoster(poster, withId: tvShow.poster_path)
+                        configurableCell.configure(title: tvShow.name, poster: poster)
+                    }
                 }
             }
         default:

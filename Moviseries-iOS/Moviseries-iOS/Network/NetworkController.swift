@@ -62,16 +62,9 @@ class NetworkController {
         }
     }
     
-    func fetchPoster(url: String, tableView: UITableView) -> UIImage? {
+    func fetchPoster(url: String, completion: @escaping(Data)->()) {
         let posterUrl = URL(string: RootPath.imagesURL.rawValue + url)
-        var poster = UIImage()
-        let posterFetchTask = TaskFactory.task(url: posterUrl!){ imageData in
-            if let image = UIImage(data: imageData) {
-                poster = image
-                tableView.reloadData()
-            }
-        }
+        let posterFetchTask = TaskFactory.task(url: posterUrl!, completion: completion)
         posterFetchTask.resume()
-        return poster
     }
 }

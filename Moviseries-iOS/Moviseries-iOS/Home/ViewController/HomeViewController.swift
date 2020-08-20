@@ -66,15 +66,14 @@ class HomeViewController: UIViewController {
         }
     }
     
-//    private func loadImage(url: String) -> UIImage? {
-//        var poster: UIImage? = nil
-//        networkController.fetchPoster(url: url) { imageData in
-//            if let image = UIImage(data: imageData) {
-//                poster = image
-//            }
-//        }
-//        return poster
-//    }
+    // MARK: Fetch posters
+    private func fetchPoster(posterUrl: String, cell: HomeTableViewCell) {
+        networkController.fetchPoster(url: posterUrl) { posterData in
+            if let poster = UIImage(data: posterData) {
+                cell.setImage(poster: poster)
+            }
+        }
+    }
 }
 
 // MARK: TableView DataSource
@@ -119,14 +118,18 @@ extension HomeViewController: UITableViewDataSource {
             if let configurableCell = cell as? HomeTableViewCell {
                 if let movie = moviesGathered?[indexPath.row] {
                     // configure cell with the appropriate movie
-                    configurableCell.configure(title: movie.title, posterUrl: movie.poster_path)
+//                    configurableCell.configure(title: movie.title, poster:)
+                    configurableCell.setTitle(title: movie.title)
+                    fetchPoster(posterUrl: movie.poster_path, cell: configurableCell)
                 }
             }
         case 1: // tv shows section
             if let configurableCell = cell as? HomeTableViewCell {
                 if let tvShow = tvShowsGathered?[indexPath.row] {
                     // configure cell using the appropriate tv show
-                    configurableCell.configure(title: tvShow.name, posterUrl: tvShow.poster_path)
+//                    configurableCell.configure(title: tvShow.name, posterUrl: tvShow.poster_path)
+                    configurableCell.setTitle(title: tvShow.name)
+                    fetchPoster(posterUrl: tvShow.poster_path, cell: configurableCell)
                 }
             }
         default:

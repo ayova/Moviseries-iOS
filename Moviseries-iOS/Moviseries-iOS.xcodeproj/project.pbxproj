@@ -21,6 +21,8 @@
 		8457B40324E064640095EEF3 /* TvGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457B40024E064640095EEF3 /* TvGenres.swift */; };
 		8457B40524E064860095EEF3 /* TvShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457B40424E064860095EEF3 /* TvShow.swift */; };
 		8457B40724E15E540095EEF3 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457B40624E15E540095EEF3 /* HomeTableViewCell.swift */; };
+		84C780C524F9920400CA5A42 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C780C424F9920400CA5A42 /* SearchViewController.swift */; };
+		84C780C824F99EB800CA5A42 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C780C724F99EB800CA5A42 /* ListCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		8457B40024E064640095EEF3 /* TvGenres.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TvGenres.swift; sourceTree = "<group>"; };
 		8457B40424E064860095EEF3 /* TvShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShow.swift; sourceTree = "<group>"; };
 		8457B40624E15E540095EEF3 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		84C780C424F9920400CA5A42 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		84C780C724F99EB800CA5A42 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,7 @@
 		8457B3D824E01D8E0095EEF3 /* Moviseries-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				84C780C324F991D600CA5A42 /* Search */,
 				841E0AD224EED3030000C0CB /* Persistence */,
 				8457B3F924E063B50095EEF3 /* Network */,
 				8457B3F324E05BA10095EEF3 /* Home */,
@@ -116,6 +121,7 @@
 		8457B3F324E05BA10095EEF3 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				84C780C624F99E7F00CA5A42 /* CollectionViewController */,
 				8457B3F424E05BAE0095EEF3 /* ViewController */,
 			);
 			path = Home;
@@ -137,6 +143,22 @@
 				8457B3FA24E064520095EEF3 /* TaskFactory.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		84C780C324F991D600CA5A42 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				84C780C424F9920400CA5A42 /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		84C780C624F99E7F00CA5A42 /* CollectionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				84C780C724F99EB800CA5A42 /* ListCollectionViewCell.swift */,
+			);
+			path = CollectionViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,6 +238,8 @@
 				8457B40324E064640095EEF3 /* TvGenres.swift in Sources */,
 				8457B3DA24E01D8E0095EEF3 /* AppDelegate.swift in Sources */,
 				8457B3DC24E01D8E0095EEF3 /* SceneDelegate.swift in Sources */,
+				84C780C524F9920400CA5A42 /* SearchViewController.swift in Sources */,
+				84C780C824F99EB800CA5A42 /* ListCollectionViewCell.swift in Sources */,
 				8457B40724E15E540095EEF3 /* HomeTableViewCell.swift in Sources */,
 				8457B3FD24E064520095EEF3 /* NetworkController.swift in Sources */,
 				841E0AD424EED4FB0000C0CB /* PosterCache.swift in Sources */,

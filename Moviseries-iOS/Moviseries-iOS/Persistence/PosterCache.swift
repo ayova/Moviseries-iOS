@@ -19,4 +19,8 @@ class PosterCache {
     func retrievePoster(withId id: String) -> UIImage? {
         return cache[id]
     }
+    
+    func retrieveAllPosters() -> [String:UIImage]? {
+        return cache
+    }
 }

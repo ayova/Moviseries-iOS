@@ -34,7 +34,6 @@ class HomeViewController: UIViewController {
         fetchContent(from: .discoverMovieEndpoint)
         fetchContent(from: .discoverTvEndpoint)
         
-        
     }
     
     // MARK: Fetch content
@@ -142,6 +141,7 @@ extension HomeViewController: UITableViewDataSource {
         default:
             fatalError()
         }
+        
         return cell
     }
 }

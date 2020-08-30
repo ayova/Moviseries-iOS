@@ -9,18 +9,62 @@
 import Foundation
 import UIKit
 
+//class PosterCache {
+//    private var cache: [String:UIImage] = [:]
+//
+//    func savePoster(_ poster: UIImage, withId id: String) {
+//        self.cache[id] = poster
+//    }
+//
+//    func retrievePoster(withId id: String) -> UIImage? {
+//        return cache[id]
+//    }
+//
+//    func retrieveAllPosters() -> [String:UIImage]? {
+//        return cache
+//    }
+//}
+
 class PosterCache {
-    private var cache: [String:UIImage] = [:]
+    private var cache: [Poster] = []
     
-    func savePoster(_ poster: UIImage, withId id: String) {
-        self.cache[id] = poster
+    func savePoster(_ poster: Poster) {
+        self.cache.append(poster)
     }
     
-    func retrievePoster(withId id: String) -> UIImage? {
-        return cache[id]
+    func retrievePoster(withId id: String) -> Poster? {
+        // filter poster by id
+        let filteredPoster = cache.filter { (poster) -> Bool in
+            poster.getId() == id
+        }
+        // make sure poster exists
+        guard let poster = filteredPoster.first else {
+            print("Poster not found through filtering!")
+            return nil
+        }
+        // return the one poster filtered
+        return poster
     }
     
-    func retrieveAllPosters() -> [String:UIImage]? {
+    func retrieveAllPosters() -> [Poster]? {
         return cache
+    }
+}
+
+struct Poster {
+    private let id: String
+    private let image: UIImage
+    
+    init(id: String, image: UIImage) {
+        self.id = id
+        self.image = image
+    }
+    
+    func getId() -> String {
+        return self.id
+    }
+    
+    func getImage() -> UIImage {
+        return self.image
     }
 }

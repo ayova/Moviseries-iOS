@@ -67,14 +67,14 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: Fetch posters and set the cell's title + image
-    private func setCellElements(posterUrl: String, completion: @escaping(UIImage)->()) {
+    private func setCellElements(posterUrl: String, completion: @escaping(Poster)->()) {
         if let poster = posterCacheController.retrievePoster(withId: posterUrl) {
             completion(poster)
         } else {
             networkController.fetchPoster(url: posterUrl) { [weak self] posterData in
-                if let poster = UIImage(data: posterData) {
-                    self?.posterCacheController.savePoster(poster, withId: posterUrl)
-                    completion(poster)
+                if let posterImage = UIImage(data: posterData) {
+                    self?.posterCacheController.savePoster(Poster(id: posterUrl, image: posterImage))
+                    completion(Poster(id: posterUrl, image: posterImage))
                 }
             }
         }
@@ -124,7 +124,7 @@ extension HomeViewController: UITableViewDataSource {
                 if let movie = moviesGathered?[indexPath.row] {
                     // configure cell with the appropriate movie details
                     setCellElements(posterUrl: movie.poster_path) { poster in
-                        configurableCell.configure(title: movie.title, poster: poster)
+                        configurableCell.configure(title: movie.title, poster: poster.getImage())
                     }
                     
                 }
@@ -134,7 +134,7 @@ extension HomeViewController: UITableViewDataSource {
                 if let tvShow = tvShowsGathered?[indexPath.row] {
                     // configure cell using the appropriate tv show details
                     setCellElements(posterUrl: tvShow.poster_path) { poster in
-                        configurableCell.configure(title: tvShow.name, poster: poster)
+                        configurableCell.configure(title: tvShow.name, poster: poster.getImage())
                     }
                 }
             }

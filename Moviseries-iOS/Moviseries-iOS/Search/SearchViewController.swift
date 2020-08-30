@@ -13,14 +13,14 @@ class SearchViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     let cacheController = PosterCache()
-    var cachedPosters: [UIImage] = []
+    var posterList: [UIImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let allP: [String:UIImage] = cacheController.retrieveAllPosters()!
-        print(allP.keys)
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        let cachedPosters = cacheController.retrieveAllPosters()!
+        for poster in cachedPosters {
+            posterList.append(poster.getImage())
+        }
     }
 }
 
@@ -32,14 +32,14 @@ extension SearchViewController: UICollectionViewDelegate {
 
 extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cachedPosters.count
+        return posterList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // dequeue
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewItemCell", for: indexPath) as! ListCollectionViewCell
         // configure/set
-        cell.configure(image: cachedPosters[indexPath.row])
+        cell.configure(image: posterList[indexPath.row])
         // return cell
         return cell
     }

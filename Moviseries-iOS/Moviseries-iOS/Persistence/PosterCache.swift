@@ -33,17 +33,17 @@ class PosterCache {
     }
     
     func retrievePoster(withId id: String) -> Poster? {
-        // filter poster by id
-        let filteredPoster = cache.filter { (poster) -> Bool in
+        // filter poster
+        let filteredPoster = cache.filter { poster -> Bool in
             poster.getId() == id
         }
-        // make sure poster exists
-        guard let poster = filteredPoster.first else {
-            print("Poster not found through filtering!")
+        if let poster = filteredPoster.first {
+            return poster // return poster if cached, else, return nil
+        } else {
+            /// this should always trigger when first opening the app as posters aren't cached at that point
+            // print("Poster with id: \(id) not found while filtering cache")
             return nil
         }
-        // return the one poster filtered
-        return poster
     }
     
     func retrieveAllPosters() -> [Poster]? {
